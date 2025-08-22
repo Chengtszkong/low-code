@@ -3,10 +3,12 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
 import { useEditorStore } from '@/stores/editor'
-import OpText from '@/components/OpText.vue'
-import ComponentList from '@/components/ComponentList.vue'
 import { defaultTextTemplates } from '@/defaultTemplates'
 import type { TextComponentProps } from '@/defaultProps'
+
+import OpText from '@/components/OpText.vue'
+import ComponentList from '@/components/ComponentList.vue'
+import EditWrapper from '@/components/EditWrapper.vue'
 
 const editorStore = useEditorStore()
 
@@ -17,6 +19,10 @@ const componentsMap: Record<string, Component> = {
 const addItem = (props: Partial<TextComponentProps>) => {
   editorStore.addComponent(props)
 }
+
+const setActive = (id: string) => {
+  editorStore.setActive(id)
+}
 </script>
 
 <template>
@@ -26,15 +32,23 @@ const addItem = (props: Partial<TextComponentProps>) => {
     </a-layout-sider>
 
     <a-layout-content>
-      <component
+      <edit-wrapper
         v-for="component in editorStore.components"
         :key="component.id"
-        :is="componentsMap[component.name]"
-        v-bind="component.props"
-      ></component>
+        :id="component.id"
+        :active="component.id === editorStore.getCurrentElement?.id"
+        @set-active="setActive"
+      >
+        <component :is="componentsMap[component.name]" v-bind="component.props"></component>
+      </edit-wrapper>
     </a-layout-content>
 
-    <a-layout-sider width="300" style="background: yellow">2</a-layout-sider>
+    <a-layout-sider width="300" style="background: purple">
+      组件属性
+      <pre>
+        {{ editorStore.getCurrentElement?.props }}
+      </pre>
+    </a-layout-sider>
   </a-layout>
 </template>
 

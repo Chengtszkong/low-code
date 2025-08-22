@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import type { TextComponentProps } from '@/defaultProps'
 
@@ -32,6 +32,14 @@ export const useEditorStore = defineStore('editor', () => {
     }
     components.value.push(newComponent)
   }
+  function setActive(id: string) {
+    currentElement.value = id
+  }
 
-  return { components, currentElement, addComponent }
+  // getter => computed
+  const getCurrentElement = computed(() => {
+    return components.value.find((component) => component.id === currentElement.value)
+  })
+
+  return { components, currentElement, addComponent, setActive, getCurrentElement }
 })
