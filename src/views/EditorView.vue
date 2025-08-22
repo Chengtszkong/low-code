@@ -3,20 +3,20 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
 import { useEditorStore } from '@/stores/editor'
-import OPText from '@/components/OText.vue'
+import OpText from '@/components/OpText.vue'
 
 const editorStore = useEditorStore()
 
 const componentsMap: Record<string, Component> = {
-  'op-text': OPText,
+  'op-text': OpText,
 }
 </script>
 
 <template>
   <a-layout>
-    <a-layout-sider width="300" style="background: yellow"> </a-layout-sider>
+    <a-layout-sider width="300" style="background: yellow">1</a-layout-sider>
 
-    <a-layout-content>
+    <a-layout-content class="relative">
       <component
         v-for="component in editorStore.components"
         :key="component.id"
@@ -25,7 +25,7 @@ const componentsMap: Record<string, Component> = {
       ></component>
     </a-layout-content>
 
-    <a-layout-sider width="300" style="background: yellow"></a-layout-sider>
+    <a-layout-sider width="300" style="background: yellow">2</a-layout-sider>
   </a-layout>
 </template>
 
