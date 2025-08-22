@@ -5,7 +5,7 @@ import HeaderLayout from '@/components/HeaderLayout.vue'
 </script>
 
 <template>
-  <a-layout :style="{ minHeight: '100%', background: '#fff' }">
+  <a-layout :style="{ minHeight: '100vh', background: '#fff' }">
     <header-layout></header-layout>
     <a-layout-content :style="{ minHeight: 'calc(100% - 128px)', padding: '24px' }">
       <router-view />

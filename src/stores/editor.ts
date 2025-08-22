@@ -1,17 +1,13 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
+import type { TextComponentProps } from '@/defaultProps'
 
 interface ComponentData {
   props: { [key: string]: unknown }
   id: string // uuid v4 生成
   name: string // 业务组件名称 op-text, op-image 等
 }
-
-// export interface EditorProps {
-//   components: ComponentData[] // 供中间编辑器渲染的数组
-//   currentElement: string // 当前编辑的元素，uuid
-// }
 
 // 测试数据
 export const testComponents: ComponentData[] = [
@@ -27,5 +23,15 @@ export const useEditorStore = defineStore('editor', () => {
 
   components.value = testComponents
 
-  return { components, currentElement }
+  // action
+  function addComponent(props: Partial<TextComponentProps>) {
+    const newComponent: ComponentData = {
+      id: uuidv4(),
+      name: 'op-text',
+      props,
+    }
+    components.value.push(newComponent)
+  }
+
+  return { components, currentElement, addComponent }
 })

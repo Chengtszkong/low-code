@@ -4,19 +4,28 @@
 import type { Component } from 'vue'
 import { useEditorStore } from '@/stores/editor'
 import OpText from '@/components/OpText.vue'
+import ComponentList from '@/components/ComponentList.vue'
+import { defaultTextTemplates } from '@/defaultTemplates'
+import type { TextComponentProps } from '@/defaultProps'
 
 const editorStore = useEditorStore()
 
 const componentsMap: Record<string, Component> = {
   'op-text': OpText,
 }
+
+const addItem = (props: Partial<TextComponentProps>) => {
+  editorStore.addComponent(props)
+}
 </script>
 
 <template>
-  <a-layout>
-    <a-layout-sider width="300" style="background: yellow">1</a-layout-sider>
+  <a-layout :style="{ height: '100vh', background: '#fff' }">
+    <a-layout-sider width="300" style="background: yellow">
+      <component-list :list="defaultTextTemplates" @on-item-click="addItem"></component-list>
+    </a-layout-sider>
 
-    <a-layout-content class="relative">
+    <a-layout-content>
       <component
         v-for="component in editorStore.components"
         :key="component.id"
