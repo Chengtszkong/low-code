@@ -9,6 +9,7 @@ import type { TextComponentProps } from '@/defaultProps'
 import OpText from '@/components/OpText.vue'
 import ComponentList from '@/components/ComponentList.vue'
 import EditWrapper from '@/components/EditWrapper.vue'
+import PropsTable from '@/components/PropsTable.vue'
 
 const editorStore = useEditorStore()
 
@@ -27,11 +28,11 @@ const setActive = (id: string) => {
 
 <template>
   <a-layout :style="{ height: '100vh', background: '#fff' }">
-    <a-layout-sider width="300" style="background: yellow">
+    <a-layout-sider width="300" style="background: #fff">
       <component-list :list="defaultTextTemplates" @on-item-click="addItem"></component-list>
     </a-layout-sider>
 
-    <a-layout-content>
+    <a-layout-content style="background: #f2f2f2">
       <edit-wrapper
         v-for="component in editorStore.components"
         :key="component.id"
@@ -43,8 +44,12 @@ const setActive = (id: string) => {
       </edit-wrapper>
     </a-layout-content>
 
-    <a-layout-sider width="300" style="background: purple">
+    <a-layout-sider width="300" style="background: #fff">
       组件属性
+      <props-table
+        v-if="editorStore.getCurrentElement && editorStore.getCurrentElement.props"
+        :props="editorStore.getCurrentElement.props"
+      ></props-table>
       <pre>
         {{ editorStore.getCurrentElement?.props }}
       </pre>

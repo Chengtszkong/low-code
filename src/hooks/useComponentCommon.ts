@@ -6,7 +6,7 @@ const useComponentCommon = (props: Readonly<Partial<TextComponentProps>>, picks:
   const styleProps = computed(() => pick(props, picks))
   const handleClick = () => {
     if (props.actionType === 'url' && props.url) {
-      window.location.href = props.url
+      // window.location.href = props.url
     }
   }
 
