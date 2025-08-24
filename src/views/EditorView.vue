@@ -24,6 +24,12 @@ const addItem = (props: Partial<TextComponentProps>) => {
 const setActive = (id: string) => {
   editorStore.setActive(id)
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const handleChange = (e: any) => {
+  console.log('event', e)
+  editorStore.updateComponent(e)
+}
 </script>
 
 <template>
@@ -49,6 +55,7 @@ const setActive = (id: string) => {
       <props-table
         v-if="editorStore.getCurrentElement && editorStore.getCurrentElement.props"
         :props="editorStore.getCurrentElement.props"
+        @change="handleChange"
       ></props-table>
       <pre>
         {{ editorStore.getCurrentElement?.props }}
