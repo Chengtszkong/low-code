@@ -64,10 +64,16 @@ export const useEditorStore = defineStore('editor', () => {
       props,
     }
     components.value.push(newComponent)
+    setActive(newComponent.id)
   }
 
   function setActive(id: string) {
     currentElement.value = id
+  }
+
+  function removeActive(id: string) {
+    components.value = components.value.filter((component) => component.id !== id)
+    currentElement.value = ''
   }
 
   function updateComponent<T extends keyof TextComponentProps>({
@@ -90,5 +96,13 @@ export const useEditorStore = defineStore('editor', () => {
     return components.value.find((component) => component.id === currentElement.value)
   })
 
-  return { components, currentElement, addComponent, setActive, updateComponent, getCurrentElement }
+  return {
+    components,
+    currentElement,
+    addComponent,
+    setActive,
+    removeActive,
+    updateComponent,
+    getCurrentElement,
+  }
 })

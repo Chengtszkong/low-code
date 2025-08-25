@@ -22,6 +22,29 @@ export type PropsToForms = {
   [P in keyof TextComponentProps]?: PropToForm
 }
 
+const fontWeightArr = [
+  { text: 'normal', value: 'normal' },
+  { text: 'lighter', value: 'lighter' },
+  { text: 'bold', value: 'bold' },
+  { text: 'bolder', value: 'bolder' },
+  { text: '100', value: '100' },
+  { text: '200', value: '200' },
+  { text: '300', value: '300' },
+  { text: '400', value: '400' },
+  { text: '500', value: '500' },
+  { text: '600', value: '600' },
+  { text: '700', value: '700' },
+  { text: '800', value: '800' },
+  { text: '900', value: '900' },
+  { text: '1000', value: '1000' },
+]
+const fontWeightOptions = fontWeightArr.map((font) => {
+  return {
+    value: font.value,
+    text: (<span style={{ fontWeight: font.value }}>{font.text}</span>) as VNode,
+  }
+})
+
 const fontFamilyArr = [
   { text: '宋体', value: '"SimSun","STSong"' },
   { text: '黑体', value: '"SimHei","STHeiti"' },
@@ -48,6 +71,12 @@ export const mapPropsToForms: PropsToForms = {
     component: 'a-input-number',
     initalTransform: (v: string) => parseInt(v),
     afterTransform: (e: number) => (e ? `${e}px` : ''),
+  },
+  fontWeight: {
+    text: '字重',
+    component: 'a-select',
+    subComponent: 'a-select-option',
+    options: [...fontWeightOptions],
   },
   lineHeight: {
     text: '行高',

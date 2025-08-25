@@ -78,7 +78,7 @@ export default defineComponent({
     })
 
     return () => (
-      <div class="props-table">
+      <a-form name="propsTable" layout="horizontal" colon={false}>
         {Object.keys(finalProps.value).map((key) => {
           const value = finalProps.value[key]
           const ComponentName = mapToComponent[value.component]
@@ -89,20 +89,17 @@ export default defineComponent({
             ...value.events,
           }
           return (
-            <div key={key} class="prop-item">
-              {value.text && <span class="label">{value.text}</span>}
-              <div class="prop-component">
-                <ComponentName {...props}>
-                  {value.options &&
-                    value.options.map((option) => {
-                      return <SubComponent value={option.value}>{option.text}</SubComponent>
-                    })}
-                </ComponentName>
-              </div>
-            </div>
+            <a-form-item key={key} name={key} label={value.text}>
+              <ComponentName {...props}>
+                {value.options &&
+                  value.options.map((option) => {
+                    return <SubComponent value={option.value}>{option.text}</SubComponent>
+                  })}
+              </ComponentName>
+            </a-form-item>
           )
         })}
-      </div>
+      </a-form>
     )
   },
 })
