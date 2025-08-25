@@ -1,9 +1,23 @@
 <script setup lang="ts">
 import type { TextComponentProps } from '@/defaultProps'
 import { mapPropsToForms } from '@/propsMap'
-import type { FormProps } from 'ant-design-vue'
 import { reduce } from 'lodash-es'
-import { computed } from 'vue'
+import { computed, type VNode } from 'vue'
+
+interface FormProps {
+  component: string
+  subComponent?: string
+  value: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  extraProps?: { [key: string]: any }
+  text?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  options?: { text: string | VNode; value: any }[]
+  valueProp: string
+  eventName: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  events: { [key: string]: (e: any) => void }
+}
 
 defineOptions({
   name: 'PropsTable',
@@ -48,7 +62,7 @@ const finalProps = computed(() => {
     <div class="prop-item" v-for="(value, key) in finalProps" :key="key">
       <span class="label" v-if="value.text">{{ value.text }}</span>
       <component
-        :is="value.compnonent"
+        :is="value.component"
         :[value.valueProp]="value.value"
         v-bind="value.extraProps"
         v-on="value.events"

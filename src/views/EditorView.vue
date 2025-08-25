@@ -9,7 +9,7 @@ import type { TextComponentProps } from '@/defaultProps'
 import OpText from '@/components/OpText.vue'
 import ComponentList from '@/components/ComponentList.vue'
 import EditWrapper from '@/components/EditWrapper.vue'
-import PropsTable from '@/components/PropsTable.vue'
+import PropsTable from '@/components/PropsTable'
 
 const editorStore = useEditorStore()
 
@@ -27,7 +27,6 @@ const setActive = (id: string) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleChange = (e: any) => {
-  console.log('event', e)
   editorStore.updateComponent(e)
 }
 </script>
